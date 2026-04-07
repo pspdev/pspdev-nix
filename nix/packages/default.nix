@@ -13,6 +13,8 @@ let
     psp-stdenv = callPackage ./psp-stdenv.nix { };
     psplinkusb = callPackage ./psplinkusb.nix { };
     psplink = callPackage ./psplink.nix { };
+    psp-pacman = callPackage ./psp-pacman.nix { };
+    psp-pkg-config = callPackage ./psp-pkg-config.nix { };
     ebootsigner = callPackage ./ebootsigner.nix { };
     psp-cmake = callPackage ./psp-cmake.nix { };
   };

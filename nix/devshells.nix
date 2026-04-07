@@ -6,6 +6,8 @@ pkgs.mkShell {
     packages.pspsdk
     packages.psplink
     packages.psplinkusb
+    packages.psp-pacman
+    packages.psp-pkg-config
     packages.ebootsigner
     packages.psp-cmake
   ];

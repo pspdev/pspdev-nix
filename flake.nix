@@ -30,6 +30,8 @@
                 my.pspsdk
                 my.psplink
                 my.psplinkusb
+                my.psp-pacman
+                my.psp-pkg-config
                 my.ebootsigner
                 my.psp-cmake
               ];
