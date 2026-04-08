@@ -42,6 +42,16 @@
       flake = {
         lib.pspMkDerivation = { pkgs }: pkgs.callPackage ./nix/psp-mk-derivation.nix { };
         overlays.default = import ./nix/overlays.nix;
+        templates = {
+          make = {
+            path = ./src/templates/make;
+            description = "PSP hello world template using Make";
+          };
+          cmake = {
+            path = ./src/templates/cmake;
+            description = "PSP hello world template using CMake";
+          };
+        };
       };
     };
 }
