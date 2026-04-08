@@ -2,12 +2,31 @@
 
 Nix flake that provides a PSP development toolchain.
 
+## Binary cache
+
+This flake is built and cached on Cachix:
+
+- Cache: `https://pspdev.cachix.org`
+- Public key: `pspdev.cachix.org-1:lFw1M0EYJeN3Y2xHR7spiuPmThrNDXo8Z9I0Jgzig/0=`
+
+To use it, add the following to your Nix configuration:
+
+```nix
+substituters = [ "https://pspdev.cachix.org" ];
+trusted-public-keys = [ "pspdev.cachix.org-1:lFw1M0EYJeN3Y2xHR7spiuPmThrNDXo8Z9I0Jgzig/0=" ];
+```
+
 ## Usage
 
 In a `flake.nix` add the following:
 
 ```nix
 {
+  nixConfig = {
+    extra-substituters = [ "https://pspdev.cachix.org" ];
+    extra-trusted-public-keys = [ "pspdev.cachix.org-1:lFw1M0EYJeN3Y2xHR7spiuPmThrNDXo8Z9I0Jgzig/0=" ];
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
