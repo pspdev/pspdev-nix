@@ -9,9 +9,7 @@ on:
 
 jobs:
   packages:
-    runs-on:
-      - self-hosted
-      - ubuntu-latest
+    runs-on: self-hosted
     strategy:
       max-parallel: 1
       matrix:
