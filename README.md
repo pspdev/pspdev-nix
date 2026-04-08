@@ -16,43 +16,21 @@ substituters = [ "https://pspdev.cachix.org" ];
 trusted-public-keys = [ "pspdev.cachix.org-1:lFw1M0EYJeN3Y2xHR7spiuPmThrNDXo8Z9I0Jgzig/0=" ];
 ```
 
-## Usage
+## Getting started
 
-In a `flake.nix` add the following:
+Make sure [flakes are enabled](https://nixos.wiki/wiki/Flakes).
 
-```nix
-{
-  nixConfig = {
-    extra-substituters = [ "https://pspdev.cachix.org" ];
-    extra-trusted-public-keys = [ "pspdev.cachix.org-1:lFw1M0EYJeN3Y2xHR7spiuPmThrNDXo8Z9I0Jgzig/0=" ];
-  };
+Then create a new project using:
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    pspdev = {
-      url = "github:slendidev/pspdev-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
-
-  outputs = inputs@{ nixpkgs, flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = nixpkgs.lib.systems.flakeExposed;
-
-      perSystem = { system, ... }: {
-        devShells.default = inputs.pspdev.devShells.${system}.default;
-      };
-    };
-}
+```sh
+nix flake new --refresh --template github:slendidev/pspdev-nix#cmake project_dir
 ```
 
-You should then be able to run `nix develop`, or if you have
-[nix-direnv](https://github.com/nix-community/nix-direnv) installed, add to
-.envrc:
+You can also initialize in the current directory with:
 
-```
-use flake
+```sh
+nix flake init --refresh --template github:slendidev/pspdev-nix#cmake
 ```
 
-And you should be good to go!
+`--refresh` is specified as templates may change over time upstream, so this
+way you will always make new projects using the latest templates.
