@@ -48,6 +48,10 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
+  preConfigure = lib.optionalString stdenv.hostPlatform.isLinux ''
+    export CFLAGS="$CFLAGS -std=gnu17"
+  '';
+
   configureFlags = [
     "--target=psp"
     "--enable-plugins"
@@ -68,9 +72,11 @@ stdenv.mkDerivation rec {
   '';
 
   configurePhase = ''
+    runHook preConfigure
     mkdir -p build-psp
     cd build-psp
     ../configure ${lib.escapeShellArgs configureFlags} --prefix=$out
+    runHook postConfigure
   '';
 
   buildPhase = ''
