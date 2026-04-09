@@ -118,7 +118,11 @@ stdenv.mkDerivation rec {
 
     for driver in psp-gcc psp-g++ psp-c++ psp-cpp; do
       if [ -x "$out/bin/$driver" ]; then
-        wrapProgram "$out/bin/$driver" --prefix PATH : "$out/libexec/psp-toolwrap/bin"
+        wrapProgram "$out/bin/$driver" \
+          --prefix PATH : "$out/libexec/psp-toolwrap/bin" \
+          --add-flags "--sysroot=${psp-sysroot}/psp" \
+          --add-flags "-isystem \$HOME/.local/share/pspdev/psp/include" \
+          --add-flags "-L\$HOME/.local/share/pspdev/psp/lib"
       fi
     done
 
