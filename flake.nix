@@ -29,6 +29,7 @@
                 my.psp-pkg-config
                 my.ebootsigner
                 my.psp-cmake
+                my.psp-clangd
               ];
             };
           };

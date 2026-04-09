@@ -10,6 +10,7 @@ pkgs.mkShell {
     packages.psp-pkg-config
     packages.ebootsigner
     packages.psp-cmake
+    packages.psp-clangd
     pkgs.gnumake
   ];
 }
