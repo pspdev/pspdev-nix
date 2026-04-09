@@ -15,6 +15,7 @@
           my = import ./nix/packages {
             inherit pkgs;
           };
+          allDerivations = pkgs.lib.attrValues (pkgs.lib.filterAttrs (_: pkg: pkgs.lib.isDerivation pkg) my);
         in {
           packages = my // {
             default = pkgs.buildEnv {
@@ -33,6 +34,8 @@
               ];
             };
           };
+
+          checks.build = pkgs.linkFarmFromDrvs "pspdev-all-packages" allDerivations;
 
           devShells.default = import ./nix/devshells.nix {
             inherit pkgs;

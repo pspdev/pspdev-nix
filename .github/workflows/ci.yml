@@ -56,21 +56,8 @@ jobs:
 
       - name: Build nix packages
         run: |
+          system="$(nix eval --impure --raw --expr builtins.currentSystem)"
           nix build \
-            .#default \
-            .#psp-binutils \
-            .#psp-gcc-bootstrap \
-            .#psp-newlib \
-            .#psp-pthread-embedded \
-            .#pspsdk \
-            .#psp-sysroot \
-            .#psp-gcc \
-            .#psp-stdenv \
-            .#psplinkusb \
-            .#psplink \
-            .#psp-pacman \
-            .#psp-pkg-config \
-            .#ebootsigner \
-            .#psp-cmake \
+            ".#checks.${system}.build" \
             --print-build-logs \
             ${{ matrix.nixpkgs-override }}
