@@ -47,13 +47,33 @@ stdenv.mkDerivation {
       export PSPDEV="@pspdev@"
     fi
 
+    has_generator=0
+    expect_generator_value=0
+
     for arg in "$@"; do
+      if [ "$expect_generator_value" -eq 1 ]; then
+        has_generator=1
+        expect_generator_value=0
+        continue
+      fi
+
       case "$arg" in
         --build|--install|--open|-P|-E|--find-package)
           exec @cmake@ "$@"
           ;;
+        -G|-A|--generator|--toolset|--platform)
+          has_generator=1
+          expect_generator_value=1
+          ;;
+        -G*|--generator=*|--toolset=*|--platform=*)
+          has_generator=1
+          ;;
       esac
     done
+
+    if [ "$has_generator" -eq 0 ] && command -v ninja >/dev/null 2>&1; then
+      exec @cmake@ -GNinja -DCMAKE_TOOLCHAIN_FILE="@out@/share/pspdev-nix/psp-toolchain.cmake" "$@"
+    fi
 
     exec @cmake@ -DCMAKE_TOOLCHAIN_FILE="@out@/share/pspdev-nix/psp-toolchain.cmake" "$@"
     EOF
