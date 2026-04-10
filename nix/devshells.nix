@@ -12,5 +12,6 @@ pkgs.mkShell {
     packages.psp-cmake
     packages.psp-clangd
     pkgs.gnumake
+    pkgs.ninja
   ];
 }
