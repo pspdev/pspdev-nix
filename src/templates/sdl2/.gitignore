@@ -5,3 +5,4 @@ result*
 *.PBP
 *.prx
 *.elf
+.cache
