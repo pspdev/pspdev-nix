@@ -5,6 +5,7 @@
   pspsdk,
   psp-gcc,
   psp-pkg-config,
+  psp-binutils,
 }:
 stdenv.mkDerivation {
   pname = "psp-cmake";
@@ -30,6 +31,8 @@ stdenv.mkDerivation {
     # Avoid PATH-dependent compiler resolution.
     set(CMAKE_C_COMPILER "${psp-gcc}/bin/psp-gcc" CACHE FILEPATH "" FORCE)
     set(CMAKE_CXX_COMPILER "${psp-gcc}/bin/psp-g++" CACHE FILEPATH "" FORCE)
+    set(CMAKE_STRIP "${psp-binutils}/bin/psp-strip" CACHE FILEPATH "" FORCE)
+    set(CMAKE_OBJCOPY "${psp-binutils}/bin/psp-objcopy" CACHE FILEPATH "" FORCE)
     set(PKG_CONFIG_EXECUTABLE "${psp-pkg-config}/bin/psp-pkg-config" CACHE FILEPATH "" FORCE)
 
     if(NOT DEFINED CMAKE_C_STANDARD_LIBRARIES OR CMAKE_C_STANDARD_LIBRARIES STREQUAL "")
