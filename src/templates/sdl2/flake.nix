@@ -8,7 +8,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     pspdev = {
-      url = "github:slendidev/pspdev-nix";
+      url = "github:pspdev/pspdev-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

@@ -9,13 +9,13 @@ Make sure [flakes are enabled](https://nixos.wiki/wiki/Flakes).
 Then create a new project using:
 
 ```sh
-nix flake new --refresh --template github:slendidev/pspdev-nix#cmake project_dir
+nix flake new --refresh --template github:pspdev/pspdev-nix#cmake project_dir
 ```
 
 You can also initialize in the current directory with:
 
 ```sh
-nix flake init --refresh --template github:slendidev/pspdev-nix#cmake
+nix flake init --refresh --template github:pspdev/pspdev-nix#cmake
 ```
 
 `--refresh` is specified as templates may change over time upstream, so this
