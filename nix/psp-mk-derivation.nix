@@ -80,7 +80,7 @@ stdenv.mkDerivation (
   // lib.optionalAttrs useCmake {
     configurePhase = args.configurePhase or ''
       runHook preConfigure
-      ${psp-cmake}/bin/psp-cmake -S . -B build ''${cmakeFlags:+$cmakeFlags}
+      ${psp-cmake}/bin/psp-cmake -S . -DCMAKE_BUILD_TYPE=Release -B build ''${cmakeFlags:+$cmakeFlags}
       runHook postConfigure
     '';
 
