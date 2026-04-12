@@ -4,7 +4,7 @@ Nix flake that provides a PSP development toolchain.
 
 ## Getting started
 
-Make sure [flakes are enabled](https://nixos.wiki/wiki/Flakes).
+Make sure [flakes are enabled](https://nixos.wiki/wiki/Flakes). If you don't have Nix, [install it from here](https://github.com/DeterminateSystems/nix-installer). This installer can enable flakes for you.
 
 Then create a new project using:
 
