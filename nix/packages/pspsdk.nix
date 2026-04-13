@@ -107,6 +107,11 @@ stdenv.mkDerivation rec {
     export PATH=$PWD/.toolwrap/bin:${psp-binutils}/bin:${psp-gcc-bootstrap}/bin:$PATH
     make install
 
+    mkdir -p "$out/bin"
+    for tool in strip objcopy ld as ar nm ranlib readelf; do
+      ln -sf "${psp-binutils}/bin/psp-$tool" "$out/bin/psp-$tool"
+    done
+
     cat >> "$out/psp/sdk/lib/build.mak" <<'EOF'
     CFLAGS += -I$(HOME)/.local/share/pspdev/psp/include -L$(HOME)/.local/share/pspdev/psp/lib
     EOF
