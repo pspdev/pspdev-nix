@@ -9,13 +9,13 @@
 
 pspMkLibraryDerivation rec {
   pname = "psp-cfw-sdk";
-  version = "601af4e";
+  version = "ddc045413798b2916f21b00cb41fe2f2d33be65a";
 
   src = fetchFromGitHub {
     owner = "pspdev";
     repo = "psp-cfw-sdk";
     rev = version;
-    hash = "sha256-CuyMGmmHlZQKYB3cUyYDs6X3YvgEbcZQpt4EBAswSRc=";
+    hash = "sha256-sq3nPsiR8uOr7EmponOFigm2bXoaFrm8imJOpygnghw=";
   };
 
   buildSystem = "cmake";
