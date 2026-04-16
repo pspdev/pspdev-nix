@@ -31,7 +31,9 @@
             src = ./.;
           };
 
-          devShells.default = inputs.pspdev.lib.pspMkShell { inherit pkgs; };
+          devShells.default = inputs.pspdev.lib.pspMkShell { inherit pkgs; } {
+            useCmake = false;
+          };
         };
     };
 }
