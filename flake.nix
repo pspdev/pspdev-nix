@@ -36,11 +36,6 @@
           };
 
           checks.build = pkgs.linkFarmFromDrvs "pspdev-all-packages" allDerivations;
-
-          devShells.default = import ./nix/devshells.nix {
-            inherit pkgs;
-            packages = my;
-          };
         };
 
       flake = {
