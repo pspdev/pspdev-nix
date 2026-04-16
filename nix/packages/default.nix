@@ -28,7 +28,7 @@ let
 
     psplinkusb = callPackage ./psplinkusb.nix { };
     psplink = callPackage ./psplink.nix { };
-    psp-ark-5 = callPackage ./psp-ark-5 { };
+    psp-ark-5 = callPackage ./psp-ark-5.nix { };
   };
 
   callPackage = pkgs.lib.callPackageWith (pkgs // packages);

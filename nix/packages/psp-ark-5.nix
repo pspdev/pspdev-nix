@@ -9,7 +9,7 @@
   psp-cfw-sdk,
 }:
 let
-  version = "9a24e2a322aa02259dfa37a32b2c5920e35efb06";
+  version = "d18b56726ad533403ec5841d764f6d08cfc8195b";
 in
 pspMkDerivation {
   pname = "psp-ark-5";
@@ -21,13 +21,12 @@ pspMkDerivation {
     owner = "PSP-Arkfive";
     repo = "ARK-5";
     rev = version;
-    hash = "sha256-v0IPApVyl7Xk2XfR+Gg/2Xlh4wSXVCW694AhLb8Oqdo=";
+    hash = "sha256-Sq9bhrJw6REyy4f+6wOOCf3EGsRmhmde1LfZYnvwJRg=";
   };
 
   nativeBuildInputs = [
     which
     python3
-    gzip
   ];
 
   buildInputs = [
@@ -54,8 +53,4 @@ pspMkDerivation {
 
     runHook postInstall
   '';
-
-  patches = [
-    ./fixes.patch
-  ];
 }
