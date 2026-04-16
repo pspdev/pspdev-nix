@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.11)
 
 project(sdl2)
 
-add_executable(${PROJECT_NAME} src/main.c)
+add_executable(${PROJECT_NAME} src/main.cpp)
 
 include(FindPkgConfig)
 pkg_search_module(SDL2 REQUIRED sdl2)
