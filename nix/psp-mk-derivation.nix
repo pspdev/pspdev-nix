@@ -11,6 +11,7 @@ args@{
   nativeBuildInputs ? [ ],
   buildInputs ? [ ],
   buildSystem ? null,
+  cmakeDir ? ".",
   ...
 }:
 let
@@ -27,6 +28,8 @@ let
     PSPDEV = "${pspsdk}";
     PSPSDK = "${pspsdk}/psp/sdk";
     PSPDIR = "${pspsdk}/psp/sdk";
+
+    NIXPSP_ADDITIONAL_SYSROOTS = lib.makeSearchPath "psp" buildInputs;
   };
 
   commonNativeBuildInputs =
@@ -80,7 +83,7 @@ stdenv.mkDerivation (
   // lib.optionalAttrs useCmake {
     configurePhase = args.configurePhase or ''
       runHook preConfigure
-      ${psp-cmake}/bin/psp-cmake -S . -DCMAKE_BUILD_TYPE=Release -B build ''${cmakeFlags:+$cmakeFlags}
+      ${psp-cmake}/bin/psp-cmake -S ${lib.escapeShellArg cmakeDir} -DCMAKE_BUILD_TYPE=Release -B build ''${cmakeFlags:+$cmakeFlags}
       runHook postConfigure
     '';
 

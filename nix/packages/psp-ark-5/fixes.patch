@@ -1,0 +1,24 @@
+diff --git a/Core/Compat/PSP/CMakeLists.txt b/Core/Compat/PSP/CMakeLists.txt
+index ca2c234..7afc6bb 100644
+--- a/Core/Compat/PSP/CMakeLists.txt
++++ b/Core/Compat/PSP/CMakeLists.txt
+@@ -1,6 +1,7 @@
+ add_compat_prx(pspcompat psp
+    SRC_FILES
+       main.c
++      src/overclock.c
+       src/syspatch.c
+       src/wpa2.c
+       src/cwpatch.c
+diff --git a/Core/VSHControl/CMakeLists.txt b/Core/VSHControl/CMakeLists.txt
+index e598a00..978c70b 100644
+--- a/Core/VSHControl/CMakeLists.txt
++++ b/Core/VSHControl/CMakeLists.txt
+@@ -24,6 +24,7 @@ target_link_libraries(vshcontrol PRIVATE
+    -nostartfiles
+    cisoread
+    arkctrl
++   pspctrl
+    pspsystemctrl_kernel
+    pspusb
+    pspusbdevice_driver
