@@ -1,17 +1,14 @@
 { pkgs, packages }:
-pkgs.mkShell {
-  packages = [
-    packages.psp-binutils
-    packages.psp-gcc
-    packages.pspsdk
-    packages.psplink
-    packages.psplinkusb
-    packages.psp-pacman
-    packages.psp-pkg-config
-    packages.ebootsigner
-    packages.psp-cmake
-    packages.psp-clangd
-    pkgs.gnumake
-    pkgs.ninja
-  ];
-}
+(pkgs.callPackage ./psp-mk-shell.nix {
+  inherit (packages)
+    psp-binutils
+    psp-gcc
+    pspsdk
+    psp-cmake
+    psp-clangd
+    psp-pacman
+    psp-pkg-config
+    psplink
+    psplinkusb
+    ebootsigner;
+}) { }

@@ -2,6 +2,7 @@
 let
   packages = rec {
     pspMkDerivation = callPackage ../psp-mk-derivation.nix { };
+    pspMkLibraryDerivation = callPackage ../psp-mk-library-derivation.nix { };
 
     psp-binutils-unwrapped = callPackage ./psp-binutils-unwrapped.nix { };
     psp-binutils = callPackage ./psp-binutils.nix { };
@@ -20,6 +21,12 @@ let
     ebootsigner = callPackage ./ebootsigner.nix { };
     psp-cmake = callPackage ./psp-cmake.nix { };
     psp-clangd = callPackage ./psp-clangd.nix { };
+
+    psp-cfw-sdk = callPackage ./psp-cfw-sdk.nix { };
+    psp-libpng = callPackage ./psp-libpng.nix { };
+    psp-zlib = callPackage ./psp-zlib.nix { };
+    psp-lz4 = callPackage ./psp-lz4.nix { };
+    psp-minilzo = callPackage ./psp-minilzo.nix { };
   };
 
   callPackage = pkgs.lib.callPackageWith (pkgs // packages);

@@ -44,7 +44,11 @@
         };
 
       flake = {
-        lib.pspMkDerivation = { pkgs }: pkgs.callPackage ./nix/psp-mk-derivation.nix { };
+        lib = {
+          pspMkDerivation = { pkgs }: pkgs.callPackage ./nix/psp-mk-derivation.nix { };
+          pspMkLibraryDerivation = { pkgs }: pkgs.callPackage ./nix/psp-mk-library-derivation.nix { };
+          pspMkShell = { pkgs }: pkgs.callPackage ./nix/psp-mk-shell.nix { };
+        };
         overlays.default = import ./nix/overlays.nix;
         templates = {
           make = {

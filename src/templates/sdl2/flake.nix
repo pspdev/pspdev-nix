@@ -32,7 +32,7 @@
             buildSystem = "cmake";
           };
 
-          devShells.default = inputs.pspdev.devShells.${system}.default;
+          devShells.default = inputs.pspdev.lib.pspMkShell { inherit pkgs; };
         };
     };
 }
