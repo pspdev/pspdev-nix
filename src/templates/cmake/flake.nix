@@ -13,7 +13,7 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, flake-parts, ... }:
+  outputs = { nixpkgs, flake-parts, pspdev, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = nixpkgs.lib.systems.flakeExposed;
 
@@ -21,18 +21,18 @@
         let
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ inputs.pspdev.overlays.default ];
+            overlays = [ pspdev.overlays.default ];
           };
         in
         {
-          packages.default = pkgs.pspMkDerivation {
+          packages.default = pspdev.lib.pspMkDerivation { inherit pkgs; } {
             pname = "hello";
             version = "0.1.0";
             src = ./.;
             buildSystem = "cmake";
           };
 
-          devShells.default = inputs.pspdev.lib.pspMkShell { inherit pkgs; } { };
+          devShells.default = pspdev.lib.pspMkShell { inherit pkgs; } { };
         };
     };
 }
