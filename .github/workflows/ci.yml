@@ -32,6 +32,9 @@ jobs:
     steps: &build_steps
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          clean: true
 
       - name: Install nix
         uses: cachix/install-nix-action@v31
