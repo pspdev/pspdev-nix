@@ -17,30 +17,24 @@
 }:
 {
   packages ? [ ],
+  psp-packages ? [ ],
   useCmake ? true,
   includeTools ? true,
   ...
 } @ args:
 
 let
-  basePackages = [
+  sysrootPackages = [
     psp-binutils
     psp-gcc
     pspsdk
-  ];
-
-  cmakePackages =
-    lib.optionals useCmake [
-      psp-cmake
-      cmake
-    ];
+  ] ++ lib.optionals useCmake [ psp-cmake ]
+    ++ psp-packages;
 
   toolPackages =
-    lib.optionals includeTools (
-      [
-        gnumake
-        ninja
-      ]
+    lib.optionals useCmake [ cmake ]
+    ++ lib.optionals includeTools (
+      [ gnumake ninja ]
       ++ lib.optionals (psplink != null) [ psplink ]
       ++ lib.optionals (psplinkusb != null) [ psplinkusb ]
       ++ lib.optionals (psp-pacman != null) [ psp-pacman ]
@@ -49,11 +43,7 @@ let
       ++ lib.optionals (psp-clangd != null) [ psp-clangd ]
     );
 
-  allPackages =
-    basePackages
-    ++ cmakePackages
-    ++ toolPackages
-    ++ packages;
+  allPackages = sysrootPackages ++ toolPackages ++ packages;
 in
 mkShell (
   args
@@ -65,6 +55,6 @@ mkShell (
     PSPDIR = "${pspsdk}/psp/sdk";
 
     NIXPSP_ADDITIONAL_SYSROOTS =
-      lib.makeSearchPath "psp" allPackages;
+      lib.makeSearchPath "psp" sysrootPackages;
   }
 )
