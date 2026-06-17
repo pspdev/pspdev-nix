@@ -26,8 +26,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "pspdev";
     repo = "gcc";
-    rev = version;
-    hash = "sha256-jvPJwApc7gQjtQQyjBq2lrLPmyfD+LdicIg7+MnNnTo=";
+    rev = "1a33997924916ff5a6f61b64179ff9c8921f46c6"; # branch: allegrex-v15.2.0
+    hash = "sha256-J4ekSFiTC34kjZYe1SkeMj/gtb2KaWBEaj2MfPcVjmM=";
   };
 
   nativeBuildInputs = [
