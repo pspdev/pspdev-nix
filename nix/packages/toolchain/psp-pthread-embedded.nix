@@ -15,8 +15,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "pspdev";
     repo = "pthread-embedded";
-    rev = version;
-    hash = "sha256-k6fR1RxblNehIdQn22E9vbL4hsRZFphKIsbZAxsD/QE=";
+    rev = "97fe4ce006b420894f2bcaeb530d1f1f53111fc2"; # branch: platform_agnostic
+    hash = "sha256-YAf62AMCinnqSGqI5PZ3nAVzQETuzBP85yRza09GR54=";
   };
 
   enableParallelBuilding = true;
