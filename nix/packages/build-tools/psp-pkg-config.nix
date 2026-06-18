@@ -26,10 +26,21 @@ stdenv.mkDerivation {
 
     PSP_PACMAN_ROOT="''${PSP_PACMAN_ROOT:-''${XDG_DATA_HOME:-$HOME/.local/share}/pspdev}"
 
+    pkgconfig_dirs="''${PSPDEV}/psp/lib/pkgconfig:''${PSPDEV}/psp/share/pkgconfig"
+    if [ -n "''${NIXPSP_ADDITIONAL_SYSROOTS:-}" ]; then
+      old_ifs=$IFS
+      IFS=:
+      for sysroot in $NIXPSP_ADDITIONAL_SYSROOTS; do
+        [ -n "$sysroot" ] || continue
+        pkgconfig_dirs="$pkgconfig_dirs:$sysroot/lib/pkgconfig:$sysroot/share/pkgconfig"
+      done
+      IFS=$old_ifs
+    fi
+
     export PKG_CONFIG_DIR=
     export PKG_CONFIG_PATH=
     export PKG_CONFIG_SYSROOT_DIR=
-    export PKG_CONFIG_LIBDIR="''${PSPDEV}/psp/lib/pkgconfig:''${PSPDEV}/psp/share/pkgconfig:''${PSP_PACMAN_ROOT}/psp/lib/pkgconfig:''${PSP_PACMAN_ROOT}/psp/share/pkgconfig"
+    export PKG_CONFIG_LIBDIR="$pkgconfig_dirs:''${PSP_PACMAN_ROOT}/psp/lib/pkgconfig:''${PSP_PACMAN_ROOT}/psp/share/pkgconfig"
 
     if [ "''${1:-}" = "--version" ]; then
       exec ${pkg-config}/bin/pkg-config --version

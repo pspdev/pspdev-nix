@@ -13,11 +13,18 @@
     };
   };
 
-  outputs = { nixpkgs, flake-parts, pspdev, ... }@inputs:
+  outputs =
+    {
+      nixpkgs,
+      flake-parts,
+      pspdev,
+      ...
+    }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = nixpkgs.lib.systems.flakeExposed;
 
-      perSystem = { system, ... }:
+      perSystem =
+        { system, ... }:
         let
           pkgs = import nixpkgs {
             inherit system;

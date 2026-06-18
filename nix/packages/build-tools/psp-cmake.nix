@@ -28,6 +28,49 @@ stdenv.mkDerivation {
 
     include("''${PSPDEV}/psp/share/pspdev.cmake")
 
+    set(_psp_prefix_paths "''${CMAKE_PREFIX_PATH}")
+    set(_psp_include_paths "''${CMAKE_INCLUDE_PATH}")
+    set(_psp_library_paths "''${CMAKE_LIBRARY_PATH}")
+
+    list(APPEND _psp_prefix_paths "${pspsdk}/psp")
+
+    if(DEFINED ENV{NIXPSP_ADDITIONAL_SYSROOTS} AND NOT "$ENV{NIXPSP_ADDITIONAL_SYSROOTS}" STREQUAL "")
+      string(REPLACE ":" ";" _psp_additional_sysroots "$ENV{NIXPSP_ADDITIONAL_SYSROOTS}")
+      foreach(_sysroot IN LISTS _psp_additional_sysroots)
+        if(_sysroot STREQUAL "")
+          continue()
+        endif()
+
+        list(APPEND _psp_prefix_paths "''${_sysroot}")
+
+        if(IS_DIRECTORY "''${_sysroot}/include")
+          list(APPEND _psp_include_paths "''${_sysroot}/include")
+        endif()
+        if(IS_DIRECTORY "''${_sysroot}/usr/include")
+          list(APPEND _psp_include_paths "''${_sysroot}/usr/include")
+        endif()
+
+        if(IS_DIRECTORY "''${_sysroot}/lib")
+          list(APPEND _psp_library_paths "''${_sysroot}/lib")
+        endif()
+        if(IS_DIRECTORY "''${_sysroot}/usr/lib")
+          list(APPEND _psp_library_paths "''${_sysroot}/usr/lib")
+        endif()
+      endforeach()
+    endif()
+
+    list(REMOVE_DUPLICATES _psp_prefix_paths)
+    list(REMOVE_DUPLICATES _psp_include_paths)
+    list(REMOVE_DUPLICATES _psp_library_paths)
+
+    set(CMAKE_PREFIX_PATH "''${_psp_prefix_paths}" CACHE STRING "" FORCE)
+    if(_psp_include_paths)
+      set(CMAKE_INCLUDE_PATH "''${_psp_include_paths}" CACHE STRING "" FORCE)
+    endif()
+    if(_psp_library_paths)
+      set(CMAKE_LIBRARY_PATH "''${_psp_library_paths}" CACHE STRING "" FORCE)
+    endif()
+
     # Avoid PATH-dependent compiler resolution.
     set(CMAKE_C_COMPILER "${psp-gcc}/bin/psp-gcc" CACHE FILEPATH "" FORCE)
     set(CMAKE_CXX_COMPILER "${psp-gcc}/bin/psp-g++" CACHE FILEPATH "" FORCE)
@@ -40,8 +83,10 @@ stdenv.mkDerivation {
     endif()
 
     if(NOT DEFINED CMAKE_CXX_STANDARD_LIBRARIES OR CMAKE_CXX_STANDARD_LIBRARIES STREQUAL "")
-      set(CMAKE_CXX_STANDARD_LIBRARIES "-lc -lm -lpthreadglue -lpthread -lcglue -lgcc" CACHE STRING "" FORCE)
+    set(CMAKE_CXX_STANDARD_LIBRARIES "-lc -lm -lpthreadglue -lpthread -lcglue -lgcc" CACHE STRING "" FORCE)
     endif()
+
+    set(ENV{PKG_CONFIG} "${psp-pkg-config}/bin/psp-pkg-config")
     EOF
 
     cat > "$out/bin/psp-cmake" <<'EOF'

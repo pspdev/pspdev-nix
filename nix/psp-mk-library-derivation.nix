@@ -12,6 +12,7 @@ args@{
   buildInputs ? [ ],
   buildSystem ? null,
   cmakeDir ? ".",
+  removeBin ? true,
   ...
 }:
 let
@@ -32,16 +33,15 @@ let
     NIXPSP_ADDITIONAL_SYSROOTS = lib.makeSearchPath "psp" buildInputs;
   };
 
-  commonNativeBuildInputs =
-    [
-      psp-binutils
-      psp-gcc
-      pspsdk
-    ]
-    ++ lib.optionals useCmake [
-      psp-cmake
-      cmake
-    ];
+  commonNativeBuildInputs = [
+    psp-binutils
+    psp-gcc
+    pspsdk
+  ]
+  ++ lib.optionals useCmake [
+    psp-cmake
+    cmake
+  ];
 in
 stdenv.mkDerivation (
   args
@@ -49,42 +49,55 @@ stdenv.mkDerivation (
     nativeBuildInputs = lib.unique (commonNativeBuildInputs ++ nativeBuildInputs);
     inherit buildInputs;
 
+    hardeningDisable = args.hardeningDisable or [ "pic" ];
+
     dontConfigure = args.dontConfigure or (!useCmake);
 
-    installPhase = args.installPhase or ''
-      runHook preInstall
-
-      mkdir -p "$out/psp/include" "$out/psp/lib" "$out/bin"
-
-      for dir in include Includes; do
-        if [ -d "$dir" ]; then
-          cp -r "$dir"/. "$out/psp/include/"
+    postInstall =
+      (args.postInstall or "")
+      + lib.optionalString removeBin ''
+        if [ -d "$out/psp/bin" ]; then
+          rm -rf "$out/psp/bin"
         fi
-      done
+      '';
 
-      for dir in libs lib build build/src build/lib; do
-        if [ -d "$dir" ]; then
-          find "$dir" -type f \( -name '*.a' -o -name '*.prx' \) \
-            -exec install -m644 -t "$out/psp/lib" {} +
-        fi
-      done
+    installPhase =
+      args.installPhase or ''
+        runHook preInstall
 
-      runHook postInstall
-    '';
+        mkdir -p "$out/psp/include" "$out/psp/lib" "$out/bin"
+
+        for dir in include Includes; do
+          if [ -d "$dir" ]; then
+            cp -r "$dir"/. "$out/psp/include/"
+          fi
+        done
+
+        for dir in libs lib build build/src build/lib; do
+          if [ -d "$dir" ]; then
+            find "$dir" -type f \( -name '*.a' -o -name '*.prx' \) \
+              -exec install -m644 -t "$out/psp/lib" {} +
+          fi
+        done
+
+        runHook postInstall
+      '';
 
     env = (args.env or { }) // commonEnv;
   }
   // lib.optionalAttrs useCmake {
-    configurePhase = args.configurePhase or ''
-      runHook preConfigure
-      ${psp-cmake}/bin/psp-cmake -S ${lib.escapeShellArg cmakeDir} -DCMAKE_BUILD_TYPE=Release -B build ''${cmakeFlags:+$cmakeFlags}
-      runHook postConfigure
-    '';
+    configurePhase =
+      args.configurePhase or ''
+        runHook preConfigure
+        ${psp-cmake}/bin/psp-cmake -S ${lib.escapeShellArg cmakeDir} -DCMAKE_BUILD_TYPE=Release -B build ''${cmakeFlags:+$cmakeFlags}
+        runHook postConfigure
+      '';
 
-    buildPhase = args.buildPhase or ''
-      runHook preBuild
-      ${cmake}/bin/cmake --build build -j$NIX_BUILD_CORES
-      runHook postBuild
-    '';
+    buildPhase =
+      args.buildPhase or ''
+        runHook preBuild
+        ${cmake}/bin/cmake --build build -j$NIX_BUILD_CORES
+        runHook postBuild
+      '';
   }
 )

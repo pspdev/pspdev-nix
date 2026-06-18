@@ -38,6 +38,12 @@ pspMkLibraryDerivation rec {
   '';
 
   meta = {
-    inherit (zlib.meta) description hmoepage license platforms maintainers;
+    inherit (zlib.meta)
+      description
+      hmoepage
+      license
+      platforms
+      maintainers
+      ;
   };
 }

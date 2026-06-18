@@ -2,21 +2,24 @@
   description = "PSPDEV";
 
   inputs = {
-    nixpkgs.url     = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs@{ flake-parts, nixpkgs, ... }:
+  outputs =
+    inputs@{ flake-parts, nixpkgs, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = nixpkgs.lib.systems.flakeExposed;
 
-      perSystem = { pkgs, system, ... }:
+      perSystem =
+        { pkgs, system, ... }:
         let
           my = import ./nix/packages {
             inherit pkgs;
           };
           allDerivations = pkgs.lib.attrValues (pkgs.lib.filterAttrs (_: pkg: pkgs.lib.isDerivation pkg) my);
-        in {
+        in
+        {
           packages = my // {
             default = pkgs.buildEnv {
               name = "pspdev";
