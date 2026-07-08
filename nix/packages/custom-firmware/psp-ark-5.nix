@@ -9,7 +9,7 @@
   psp-cfw-sdk,
 }:
 let
-  version = "d18b56726ad533403ec5841d764f6d08cfc8195b";
+  version = "97025b3366c6431282b34a75e276566bd20ad905";
 in
 pspMkDerivation {
   pname = "psp-ark-5";
