@@ -69,14 +69,3 @@ jobs:
 
     steps: *build_steps
 
-  packages-master:
-    if: ${{ github.event_name != 'schedule' }}
-    needs: packages-unstable
-    env:
-      NIXPKGS_OVERRIDE: --override-input nixpkgs github:NixOS/nixpkgs/master
-    strategy:
-      matrix: *platform_matrix
-
-    runs-on: ${{ matrix.platform.runs-on }}
-
-    steps: *build_steps
