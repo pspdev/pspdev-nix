@@ -49,7 +49,7 @@ pspMkLibraryDerivation rec {
 
   postPatch = ''
     substituteInPlace SDLnetsys.h \
-      --replace-fail '#include <net/if.h>' '/* PSP: net/if.h unavailable */'
+      --replace-quiet '#include <net/if.h>' '/* PSP: net/if.h unavailable */'
   '';
 
   buildPhase = ''
