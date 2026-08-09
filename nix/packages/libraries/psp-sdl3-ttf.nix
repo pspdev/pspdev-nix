@@ -4,13 +4,12 @@
   psp-freetype,
   psp-harfbuzz,
   psp-sdl3,
-  sdl3-ttf,
   pspMkLibraryDerivation,
 }:
 
 pspMkLibraryDerivation rec {
   pname = "psp-sdl3-ttf";
-  inherit (sdl3-ttf) version;
+  version = "3.2.2";
 
   src = fetchFromGitHub {
     owner = "libsdl-org";
@@ -55,7 +54,9 @@ pspMkLibraryDerivation rec {
   '';
 
   meta = {
-    inherit (sdl3-ttf.meta) description homepage license;
+    description = "TrueType font library for SDL3";
+    homepage = "https://github.com/libsdl-org/SDL_ttf";
+    license = lib.licenses.zlib;
     platforms = lib.platforms.all;
   };
 }

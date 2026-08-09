@@ -1,6 +1,6 @@
 {
   lib,
-  SDL2_gfx,
+  fetchurl,
   psp-sdl2,
   psp-pkg-config,
   pspMkLibraryDerivation,
@@ -8,7 +8,11 @@
 
 pspMkLibraryDerivation rec {
   pname = "psp-sdl2-gfx";
-  inherit (SDL2_gfx) version src;
+  version = "1.0.4";
+  src = fetchurl {
+    url = "http://www.ferzkopp.net/Software/SDL2_gfx/SDL2_gfx-${version}.tar.gz";
+    hash = "sha256-Y+DgGt3tyd8vhbk6JI8G6KBK/6AUqDXC6jS/405XYmI=";
+  };
 
   buildSystem = "custom";
 
@@ -65,7 +69,9 @@ pspMkLibraryDerivation rec {
   doCheck = false;
 
   meta = {
-    inherit (SDL2_gfx.meta) description homepage license;
+    description = "SDL2 graphics primitives library";
+    homepage = "https://www.ferzkopp.net/Software/SDL2_gfx/";
+    license = lib.licenses.zlib;
     platforms = lib.platforms.all;
   };
 }

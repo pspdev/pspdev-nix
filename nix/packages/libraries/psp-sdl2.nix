@@ -1,7 +1,6 @@
 {
   lib,
   fetchurl,
-  SDL2,
   psp-libpspvram,
   psp-pspgl,
   pspMkLibraryDerivation,
@@ -41,7 +40,9 @@ pspMkLibraryDerivation rec {
   '';
 
   meta = {
-    inherit (SDL2.meta) description homepage license;
+    description = "Simple DirectMedia Layer 2";
+    homepage = "https://www.libsdl.org/";
+    license = lib.licenses.zlib;
     platforms = lib.platforms.all;
   };
 }

@@ -1,6 +1,6 @@
 {
   lib,
-  SDL2_image,
+  fetchurl,
   psp-libpng,
   psp-libjpeg,
   psp-libwebp,
@@ -10,7 +10,6 @@
   psp-zlib,
   pspMkLibraryDerivation,
   stdenv,
-  zlib,
   # Boolean flags
   enableSTB ? true,
   enableSdltest ? (!stdenv.hostPlatform.isDarwin),
@@ -18,7 +17,11 @@
 
 pspMkLibraryDerivation rec {
   pname = "psp-sdl2-image";
-  inherit (SDL2_image) version src;
+  version = "2.8.12";
+  src = fetchurl {
+    url = "https://www.libsdl.org/projects/SDL_image/release/SDL2_image-${version}.tar.gz";
+    hash = "sha256-OT9e+1BTbsE8pPSv+2nMmWbTw/lp5sXnAfrd+fl4U4E=";
+  };
 
   buildSystem = "custom";
 
@@ -89,7 +92,9 @@ pspMkLibraryDerivation rec {
   doCheck = false;
 
   meta = {
-    inherit (SDL2_image.meta) description homepage license;
+    description = "Image loading library for SDL2";
+    homepage = "https://github.com/libsdl-org/SDL_image";
+    license = lib.licenses.zlib;
     platforms = lib.platforms.all;
   };
 }

@@ -1,13 +1,17 @@
 {
   lib,
-  SDL2_sound,
+  fetchurl,
   psp-sdl2,
   pspMkLibraryDerivation,
 }:
 
 pspMkLibraryDerivation rec {
   pname = "psp-sdl2-sound";
-  inherit (SDL2_sound) version src;
+  version = "2.0.6";
+  src = fetchurl {
+    url = "https://github.com/icculus/SDL_sound/archive/v${version}.tar.gz";
+    hash = "sha256-Y75XzIC80pru1sKXAHWYccRMkCUadQi40OrNjZzs4ww=";
+  };
 
   buildSystem = "cmake";
 
@@ -45,7 +49,9 @@ pspMkLibraryDerivation rec {
   '';
 
   meta = {
-    inherit (SDL2_sound.meta) description homepage license;
+    description = "Sound decoding library for SDL2";
+    homepage = "https://github.com/icculus/SDL_sound";
+    license = lib.licenses.zlib;
     platforms = lib.platforms.all;
   };
 }

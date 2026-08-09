@@ -1,7 +1,6 @@
 {
   lib,
   fetchFromGitHub,
-  SDL2_ttf,
   psp-pkg-config,
   psp-sdl2,
   pspMkLibraryDerivation,
@@ -9,7 +8,7 @@
 
 pspMkLibraryDerivation rec {
   pname = "psp-sdl2-ttf";
-  inherit (SDL2_ttf) version;
+  version = "2.24.0";
 
   src = fetchFromGitHub {
     owner = "libsdl-org";
@@ -102,7 +101,9 @@ pspMkLibraryDerivation rec {
   doCheck = false;
 
   meta = {
-    inherit (SDL2_ttf.meta) description homepage license;
+    description = "TrueType font library for SDL2";
+    homepage = "https://github.com/libsdl-org/SDL_ttf";
+    license = lib.licenses.zlib;
     platforms = lib.platforms.all;
   };
 }

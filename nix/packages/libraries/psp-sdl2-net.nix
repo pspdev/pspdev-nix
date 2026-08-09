@@ -1,15 +1,20 @@
 {
   lib,
-  SDL2_net,
+  fetchFromGitHub,
   psp-sdl2,
   psp-pkg-config,
   pspMkLibraryDerivation,
-  stdenv,
 }:
 
 pspMkLibraryDerivation rec {
   pname = "psp-sdl2-net";
-  inherit (SDL2_net) version src;
+  version = "2.4.0";
+  src = fetchFromGitHub {
+    owner = "libsdl-org";
+    repo = "SDL_net";
+    rev = "release-${version}";
+    hash = "sha256-FDJT5RPoquC527K0wG9IPouea6P3lwhHPqj29sZXMuw=";
+  };
 
   buildSystem = "custom";
 
@@ -47,11 +52,6 @@ pspMkLibraryDerivation rec {
     runHook postConfigure
   '';
 
-  postPatch = ''
-    substituteInPlace SDLnetsys.h \
-      --replace-quiet '#include <net/if.h>' '/* PSP: net/if.h unavailable */'
-  '';
-
   buildPhase = ''
     runHook preBuild
 
@@ -71,7 +71,9 @@ pspMkLibraryDerivation rec {
   doCheck = false;
 
   meta = {
-    inherit (SDL2_net.meta) description homepage license;
+    description = "Networking library for SDL2";
+    homepage = "https://github.com/libsdl-org/SDL_net";
+    license = lib.licenses.zlib;
     platforms = lib.platforms.all;
   };
 }

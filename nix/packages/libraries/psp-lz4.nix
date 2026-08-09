@@ -1,7 +1,6 @@
 {
   lib,
   fetchFromGitHub,
-  lz4,
   pspMkLibraryDerivation,
 }:
 
@@ -47,7 +46,9 @@ pspMkLibraryDerivation rec {
   '';
 
   meta = {
-    inherit (lz4.meta) description homepage license;
+    description = "Lossless compression algorithm";
+    homepage = "https://github.com/lz4/lz4";
+    license = lib.licenses.bsd2;
     platforms = lib.platforms.all;
   };
 }

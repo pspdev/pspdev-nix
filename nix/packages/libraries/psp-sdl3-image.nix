@@ -7,7 +7,7 @@
   psp-pkg-config,
   psp-sdl3,
   psp-zlib,
-  sdl3-image,
+  fetchurl,
   pspMkLibraryDerivation,
   stdenv,
   # Boolean flags
@@ -18,7 +18,11 @@
 
 pspMkLibraryDerivation rec {
   pname = "psp-sdl3-image";
-  inherit (sdl3-image) version src;
+  version = "3.4.4";
+  src = fetchurl {
+    url = "https://github.com/libsdl-org/SDL_image/archive/refs/tags/release-${version}.tar.gz";
+    hash = "sha256-sMEbveVA4m0c7fMRdDSf5qtn5XZY7+IuFudRcoWcgX0=";
+  };
 
   buildSystem = "cmake";
 
@@ -76,7 +80,9 @@ pspMkLibraryDerivation rec {
   '';
 
   meta = {
-    inherit (sdl3-image.meta) description homepage license;
+    description = "Image loading library for SDL3";
+    homepage = "https://github.com/libsdl-org/SDL_image";
+    license = lib.licenses.zlib;
     platforms = lib.platforms.all;
   };
 }

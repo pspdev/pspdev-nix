@@ -1,7 +1,6 @@
 {
   lib,
   fetchFromGitHub,
-  SDL2_mixer,
   psp-sdl2,
   psp-pkg-config,
   pspMkLibraryDerivation,
@@ -9,7 +8,13 @@
 
 pspMkLibraryDerivation rec {
   pname = "psp-sdl2-mixer";
-  inherit (SDL2_mixer) version src;
+  version = "2.8.2";
+  src = fetchFromGitHub {
+    owner = "libsdl-org";
+    repo = "SDL_mixer";
+    rev = "release-${version}";
+    hash = "sha256-ln2RncnKbHIqvFia/ZlnbOGoVDJV8gF3538Wft3/wrw=";
+  };
 
   buildSystem = "cmake";
 
@@ -61,7 +66,9 @@ pspMkLibraryDerivation rec {
   doCheck = false;
 
   meta = {
-    inherit (SDL2_mixer.meta) description homepage license;
+    description = "Audio mixer library for SDL2";
+    homepage = "https://github.com/libsdl-org/SDL_mixer";
+    license = lib.licenses.zlib;
     platforms = lib.platforms.all;
   };
 }

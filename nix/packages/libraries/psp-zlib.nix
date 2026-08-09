@@ -1,12 +1,16 @@
 {
   lib,
-  zlib,
+  fetchurl,
   pspMkLibraryDerivation,
 }:
 
 pspMkLibraryDerivation rec {
   pname = "psp-zlib";
-  inherit (zlib) version src;
+  version = "1.3.2";
+  src = fetchurl {
+    url = "https://zlib.net/fossils/zlib-${version}.tar.gz";
+    hash = "sha256-uzKaCizQJ00FUZ1hxmfAYuBpkNcuEl7i36jeZPARnRY=";
+  };
 
   buildSystem = "cmake";
 
@@ -38,12 +42,9 @@ pspMkLibraryDerivation rec {
   '';
 
   meta = {
-    inherit (zlib.meta)
-      description
-      hmoepage
-      license
-      platforms
-      maintainers
-      ;
+    description = "General-purpose lossless data-compression library";
+    homepage = "https://zlib.net/";
+    license = lib.licenses.zlib;
+    platforms = lib.platforms.all;
   };
 }

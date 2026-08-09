@@ -2,13 +2,17 @@
   lib,
   psp-libpspvram,
   psp-pspgl,
-  sdl3,
+  fetchurl,
   pspMkLibraryDerivation,
 }:
 
 pspMkLibraryDerivation rec {
   pname = "psp-sdl3";
-  inherit (sdl3) version src;
+  version = "3.4.12";
+  src = fetchurl {
+    url = "https://github.com/libsdl-org/SDL/archive/refs/tags/release-${version}.tar.gz";
+    hash = "sha256-toOB8Gp1gOY0ALO261R+xX2MPr3nD59A4KulMLoF2ic=";
+  };
 
   buildSystem = "cmake";
 
@@ -37,7 +41,9 @@ pspMkLibraryDerivation rec {
   '';
 
   meta = {
-    inherit (sdl3.meta) description homepage license;
+    description = "Simple DirectMedia Layer 3";
+    homepage = "https://www.libsdl.org/";
+    license = lib.licenses.zlib;
     platforms = lib.platforms.all;
   };
 }

@@ -1,12 +1,16 @@
 {
   lib,
-  libwebp,
+  fetchurl,
   pspMkLibraryDerivation,
 }:
 
 pspMkLibraryDerivation rec {
   pname = "psp-libwebp";
-  inherit (libwebp) version src;
+  version = "1.6.0";
+  src = fetchurl {
+    url = "https://github.com/webmproject/libwebp/archive/v${version}.tar.gz";
+    hash = "sha256-k6hSwrPvr+43I+/UY23oVbRvn+Hv3dYH4fQvYPyPITY=";
+  };
 
   buildSystem = "cmake";
 
@@ -45,7 +49,9 @@ pspMkLibraryDerivation rec {
   '';
 
   meta = {
-    inherit (libwebp.meta) description homepage license;
+    description = "WebP image format library";
+    homepage = "https://developers.google.com/speed/webp";
+    license = lib.licenses.bsd3;
     platforms = lib.platforms.all;
   };
 }

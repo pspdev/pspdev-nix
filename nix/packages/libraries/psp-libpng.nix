@@ -1,13 +1,17 @@
 {
   lib,
-  libpng,
+  fetchurl,
   psp-zlib,
   pspMkLibraryDerivation,
 }:
 
 pspMkLibraryDerivation rec {
   pname = "psp-libpng";
-  inherit (libpng) version src;
+  version = "1.6.58";
+  src = fetchurl {
+    url = "mirror://sourceforge/libpng/libpng-${version}.tar.xz";
+    hash = "sha256-KOtAP1Hw90BSSRMs7P6C6lwO+X8bMsWmWCiBSuDTR3U=";
+  };
 
   buildSystem = "cmake";
 
@@ -55,7 +59,9 @@ pspMkLibraryDerivation rec {
   '';
 
   meta = {
-    inherit (libpng.meta) description homepage license;
+    description = "Portable Network Graphics library";
+    homepage = "https://libpng.sourceforge.net/";
+    license = lib.licenses.libpng;
     platforms = lib.platforms.all;
   };
 }

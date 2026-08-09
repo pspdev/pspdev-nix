@@ -1,12 +1,16 @@
 {
   lib,
-  libjpeg,
+  fetchurl,
   pspMkLibraryDerivation,
 }:
 
 pspMkLibraryDerivation rec {
   pname = "psp-libjpeg";
-  inherit (libjpeg) version src;
+  version = "3.1.4.1";
+  src = fetchurl {
+    url = "https://github.com/libjpeg-turbo/libjpeg-turbo/archive/refs/tags/${version}.tar.gz";
+    hash = "sha256-p9pCtkA3fCqalmXixLDqYM1Vma+0jCUh5t8MncnRWiU=";
+  };
 
   buildSystem = "cmake";
 
@@ -29,7 +33,9 @@ pspMkLibraryDerivation rec {
   '';
 
   meta = {
-    inherit (libjpeg.meta) description homepage license;
+    description = "JPEG image codec library";
+    homepage = "https://libjpeg-turbo.org/";
+    license = lib.licenses.bsd3;
     platforms = lib.platforms.all;
   };
 }
