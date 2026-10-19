@@ -10,13 +10,13 @@
 
 pspMkLibraryDerivation rec {
   pname = "psp-cfw-sdk";
-  version = "ddc045413798b2916f21b00cb41fe2f2d33be65a";
+  version = "b03c8d92a2ed6c81ad2313b043611ae6ba0f46f2";
 
   src = fetchFromGitHub {
     owner = "pspdev";
     repo = "psp-cfw-sdk";
     rev = version;
-    hash = "sha256-sq3nPsiR8uOr7EmponOFigm2bXoaFrm8imJOpygnghw=";
+    hash = "sha256-Vd8QehOZZGFywAYSw7UEQyoXpPqvYOAzu+5rp7I87XE=";
   };
 
   buildSystem = "cmake";
@@ -33,10 +33,22 @@ pspMkLibraryDerivation rec {
   # we don't want random empty bin outputs
   dontStrip = true;
 
-  postBuild = ''
+  postPatch = ''
+    # Upstream's CMake build omits the popsdisplay library used by ARK-5.
+    cat >> src/CMakeLists.txt <<'EOF'
+
+    add_sdk_library(popsdisplay)
+    target_sources(popsdisplay PRIVATE popsdisplay/popsdisplay.c)
+    target_compile_options(popsdisplay PRIVATE -O3 -fno-builtin)
+    EOF
+  '';
+
+  preBuild = ''
     # mirror the old Makefile staging behavior that upstream expects
     mkdir -p include/iplsdk
     cp -f src/LibPspExploit/libpspexploit.h include/
+    cp -f src/BootLoadEx/*.h include/
+    cp -f src/popsdisplay/*.h include/
     cp -f src/iplsdk/include/*.h include/iplsdk/
   '';
 
