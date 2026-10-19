@@ -14,7 +14,7 @@
   psp-pthread-embedded,
 }:
 let
-  version = "18ba1ccb411f509e472adee94ad5d19af56dd251";
+  version = "6ef2b21dc440ef8d4125f000301faaa2a470975e";
 in
 stdenv.mkDerivation rec {
   pname = "pspsdk";
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     owner = "pspdev";
     repo = "pspsdk";
     rev = version;
-    hash = "sha256-N3OrHJLlVr6iAC1Fsb9qDyekPGCyRPJvfaPw6zID27o=";
+    hash = "sha256-z5s3MdFViaSRgavf1dyOKvKeK0a3dVQm6EG97o5ysbc=";
   };
 
   nativeBuildInputs = [
