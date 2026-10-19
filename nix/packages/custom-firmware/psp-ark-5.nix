@@ -9,7 +9,7 @@
   psp-cfw-sdk,
 }:
 let
-  version = "97025b3366c6431282b34a75e276566bd20ad905";
+  version = "69fe3d898a87d3f100ddc5a51d7738bad200d162";
 in
 pspMkDerivation {
   pname = "psp-ark-5";
@@ -21,7 +21,7 @@ pspMkDerivation {
     owner = "PSP-Arkfive";
     repo = "ARK-5";
     rev = version;
-    hash = "sha256-Sq9bhrJw6REyy4f+6wOOCf3EGsRmhmde1LfZYnvwJRg=";
+    hash = "sha256-dsdnLeF61UE9Y+2+N+z7OpqspOOX2jb9eNw1oFLvHJY=";
   };
 
   nativeBuildInputs = [
@@ -49,7 +49,6 @@ pspMkDerivation {
 
     mkdir -p "$out"
     cp -rv dist/* $out/
-    cp -rv Resources/ARK_01234 $out/
 
     runHook postInstall
   '';
