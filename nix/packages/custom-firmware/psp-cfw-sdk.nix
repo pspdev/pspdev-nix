@@ -34,12 +34,20 @@ pspMkLibraryDerivation rec {
   dontStrip = true;
 
   postPatch = ''
-    # Upstream's CMake build omits the popsdisplay library used by ARK-5.
+    # Upstream's CMake build omits libraries used by ARK-5 and its updater.
     cat >> src/CMakeLists.txt <<'EOF'
 
     add_sdk_library(popsdisplay)
     target_sources(popsdisplay PRIVATE popsdisplay/popsdisplay.c)
     target_compile_options(popsdisplay PRIVATE -O3 -fno-builtin)
+
+    add_sdk_library(pspminicrt)
+    target_sources(pspminicrt PRIVATE pspminicrt/crt0.c)
+    target_compile_options(pspminicrt PRIVATE -fno-builtin)
+
+    add_sdk_library(pspmalloc)
+    target_sources(pspmalloc PRIVATE pspmalloc/pspmalloc.c)
+    target_compile_options(pspmalloc PRIVATE -fno-builtin)
     EOF
   '';
 

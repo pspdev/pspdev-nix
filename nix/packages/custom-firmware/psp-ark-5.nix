@@ -7,6 +7,7 @@
   psp-lz4,
   psp-minilzo,
   psp-cfw-sdk,
+  psp-libintrafont,
 }:
 let
   version = "69fe3d898a87d3f100ddc5a51d7738bad200d162";
@@ -33,6 +34,7 @@ pspMkDerivation {
     psp-lz4
     psp-minilzo
     psp-cfw-sdk
+    psp-libintrafont
   ];
 
   preConfigure = ''
