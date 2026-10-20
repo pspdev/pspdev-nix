@@ -6,7 +6,7 @@
   readline,
 }:
 let
-  version = "8cc9876a868d202c0ef4197395c5278aeeff2829";
+  version = "4b767c097e1f269b580758a7de0e386f5ad9a247";
 in
 stdenv.mkDerivation {
   pname = "psplinkusb";
@@ -16,7 +16,7 @@ stdenv.mkDerivation {
     owner = "pspdev";
     repo = "psplinkusb";
     rev = version;
-    hash = "sha256-a8W87yodKOha3/vjJikAbaBXZWwQA9Z75XtcfKaI0A0=";
+    hash = "sha256-u6kaAuuuXK9jNEpv2r5bXm6Su4+XBL/8oDoLIF3lRAA=";
   };
 
   nativeBuildInputs = [
