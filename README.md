@@ -25,7 +25,7 @@ way you will always make new projects using the latest templates.
 
 This flake is built and cached on Cachix:
 
-- Cache: `https://pspdev.cachix.org`
+- Cache: [`https://pspdev.cachix.org`](https://pspdev.cachix.org)
 - Public key: `pspdev.cachix.org-1:lFw1M0EYJeN3Y2xHR7spiuPmThrNDXo8Z9I0Jgzig/0=`
 
 To use it, add the following to your Nix configuration:
