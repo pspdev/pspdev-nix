@@ -3,6 +3,10 @@
   psp-zlib = callPackage ./psp-zlib.nix { };
   psp-libjpeg = callPackage ./psp-libjpeg.nix { };
   psp-libpspvram = callPackage ./psp-libpspvram.nix { };
+  psp-libpspmath = callPackage ./psp-libpspmath.nix { };
+  psp-libpspav = callPackage ./psp-libpspav.nix { };
+  psp-libintrafont = callPackage ./psp-libintrafont.nix { };
+  psp-ya2d = callPackage ./psp-ya2d.nix { };
   psp-libpng = callPackage ./psp-libpng.nix { };
   psp-freetype = callPackage ./psp-freetype.nix { };
   psp-harfbuzz = callPackage ./psp-harfbuzz.nix { };
